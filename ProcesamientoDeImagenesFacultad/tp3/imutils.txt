@@ -1,0 +1,35 @@
+2. contar_contornos(img_bin)
+This function counts the number of contours in a binary image.
+
+contours, _ = cv2.findContours(img_bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE): Finds all contours in the binary image img_bin.
+
+return len(contours): Returns the count of contours found.
+
+3. graficar_caja(img, stats, color, box=True, text=None, thickness=3, fontScale=10, color_text=None)
+This function is for drawing a bounding box on an image.
+
+Extracts information from the stats parameter, which is assumed to be obtained from cv2.connectedComponentsWithStats.
+
+Draws a rectangle on the image if box is True.
+
+Draws text on the image if text is provided.
+
+The appearance of the bounding box and text can be customized using parameters such as color, thickness, fontScale, and color_text.
+
+4. obtener_sub_imagen(img, stats)
+Given an image and statistics about an area of interest (stats), this function returns the corresponding sub-image.
+
+Extracts the horizontal and vertical coordinates (coor_h and coor_v).
+
+Extracts the width and height of the bounding box from the statistics.
+
+Returns the sub-image using NumPy array slicing.
+
+5. leer_video(path)
+This function takes a path to a video and returns necessary information about the video.
+
+cv2.VideoCapture(path): Opens the video file specified by path.
+
+Retrieves width, height, frames per second (fps), and total number of frames from the video capture object.
+
+Returns a tuple (cap, width, height, fps, n_frames) containing the video capture object and the extracted information.

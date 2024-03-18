@@ -1,0 +1,44 @@
+crear_mascara_dados
+
+This function takes a frame in HSV color space along with Hue (H) and Saturation (S) threshold values.
+It extracts the H and S channels from the frame and creates binary masks for both channels based on the given thresholds.
+The function returns the bitwise AND of these masks.
+
+############################################################################################################################################################
+procesar_frame
+
+This function takes a scaled frame as input.
+It converts the frame from RGB to HSV color space.
+Calls crear_mascara_dados to obtain a binary mask of the dice in the frame.
+Applies morphological closing operation to the mask using a predefined structural element.
+Returns the processed binary image with the segmented dice.
+
+############################################################################################################################################################
+filtrar_dados
+
+This function takes the output of cv2.connectedComponentsWithStats, which includes the number of connected components, labels, stats, and centroids.
+It filters out potential dice based on area and a shape factor (rho).
+Returns a list of possible dice (as tuples containing stats and binary image) and their centroids.
+
+############################################################################################################################################################
+graficar_dados
+
+This function takes a list of dice information, an input frame, and colors for the bounding box and text.
+It iterates through the list, drawing bounding boxes around the dice on the input frame.
+The text inside the box represents the number of contours detected in the binary image of the dice.
+
+############################################################################################################################################################
+procesar_video
+
+This function takes the path to a video file, processes each frame, and displays the result while saving an output video.
+It reads the input video, resizes frames based on a scaling factor, and initializes an output video file.
+It iterates through the frames, applies procesar_frame and filtrar_dados to identify dice.
+It tracks consecutive frames where the dice centroids remain relatively stable, indicating the dice are not moving.
+If a sufficient number of consecutive stable frames are detected, it calls graficar_dados to draw bounding boxes around the dice.
+Displays the processed frame and writes it to the output video.
+The process continues until the user presses 'q'.
+main
+
+Parses command line arguments using the argparse module.
+Calls procesar_video for each input video specified in the command line arguments.
+if __name__ == "__main__":
